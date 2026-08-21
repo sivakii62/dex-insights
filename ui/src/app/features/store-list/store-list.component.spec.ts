@@ -7,12 +7,8 @@ import { provideRouter } from '@angular/router';
 import { apiPaths } from '../../core/api/api.config';
 import { StoreListComponent } from './store-list.component';
 
-/** Exposes StoreListComponent's protected surface for the test only. */
-type TestableStoreList = {
-  readonly offlinePumpsSortState: StoreListComponent['offlinePumpsSortState'];
-  updateBrand(value: string): void;
-  toggleOfflinePumpsSort(): void;
-};
+/** Exposes StoreListComponent's protected store for the test only. */
+type TestableStoreList = { readonly store: StoreListComponent['store'] };
 
 const emptyPage = { content: [], page: 0, size: 10, totalElements: 0, totalPages: 0, hasNext: false };
 
@@ -37,26 +33,26 @@ describe('StoreListComponent', () => {
   it('cycles the offline-pumps sort through descending, ascending, then back to unsorted', () => {
     const fixture = TestBed.createComponent(StoreListComponent);
     fixture.detectChanges();
-    const component = fixture.componentInstance as unknown as TestableStoreList;
+    const { store } = fixture.componentInstance as unknown as TestableStoreList;
     httpMock.expectOne((req) => req.url === apiPaths.stores()).flush(emptyPage);
 
-    expect(component.offlinePumpsSortState()).toBe('none');
+    expect(store.offlinePumpsSortState()).toBe('none');
 
-    component.toggleOfflinePumpsSort();
+    store.toggleOfflinePumpsSort();
     fixture.detectChanges();
-    expect(component.offlinePumpsSortState()).toBe('desc');
+    expect(store.offlinePumpsSortState()).toBe('desc');
     httpMock.expectOne((req) => req.params.get('sortBy') === 'OFFLINE_PUMPS' && req.params.get('direction') === 'DESC')
       .flush(emptyPage);
 
-    component.toggleOfflinePumpsSort();
+    store.toggleOfflinePumpsSort();
     fixture.detectChanges();
-    expect(component.offlinePumpsSortState()).toBe('asc');
+    expect(store.offlinePumpsSortState()).toBe('asc');
     httpMock.expectOne((req) => req.params.get('sortBy') === 'OFFLINE_PUMPS' && req.params.get('direction') === 'ASC')
       .flush(emptyPage);
 
-    component.toggleOfflinePumpsSort();
+    store.toggleOfflinePumpsSort();
     fixture.detectChanges();
-    expect(component.offlinePumpsSortState()).toBe('none');
+    expect(store.offlinePumpsSortState()).toBe('none');
     httpMock.expectOne((req) => req.params.get('sortBy') === 'STORE_ID' && req.params.get('direction') === 'ASC')
       .flush(emptyPage);
   });
@@ -64,14 +60,28 @@ describe('StoreListComponent', () => {
   it('sends a trimmed brand as a query parameter, so a partial term like "7" can match "7-Eleven"', () => {
     const fixture = TestBed.createComponent(StoreListComponent);
     fixture.detectChanges();
-    const component = fixture.componentInstance as unknown as TestableStoreList;
+    const { store } = fixture.componentInstance as unknown as TestableStoreList;
     httpMock.expectOne((req) => req.url === apiPaths.stores()).flush(emptyPage);
 
-    component.updateBrand('  7  ');
+    store.setBrand('  7  ');
     fixture.detectChanges();
 
     const request = httpMock.expectOne((req) => req.url === apiPaths.stores());
     expect(request.request.params.get('brand')).toBe('7');
     request.flush(emptyPage);
+  });
+
+  it('surfaces a request failure as a readable error message', () => {
+    const fixture = TestBed.createComponent(StoreListComponent);
+    fixture.detectChanges();
+    const { store } = fixture.componentInstance as unknown as TestableStoreList;
+
+    httpMock.expectOne((req) => req.url === apiPaths.stores()).flush(
+      { title: 'Service unavailable', detail: 'The store index is temporarily unavailable.' },
+      { status: 503, statusText: 'Service Unavailable' },
+    );
+    fixture.detectChanges();
+
+    expect(store.error()).toBe('The store index is temporarily unavailable.');
   });
 });

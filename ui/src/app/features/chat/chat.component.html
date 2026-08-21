@@ -25,8 +25,8 @@
       <input id="store-id" class="input" type="text" formControlName="storeId" placeholder="e.g. 10001" />
     </div>
 
-    <button type="submit" class="btn btn--primary" [disabled]="loading()">
-      {{ loading() ? 'Thinking…' : 'Ask' }}
+    <button type="submit" class="btn btn--primary" [disabled]="store.loading()">
+      {{ store.loading() ? 'Thinking…' : 'Ask' }}
     </button>
   </form>
 
@@ -38,11 +38,11 @@
   </div>
 </section>
 
-@if (loading()) {
+@if (store.loading()) {
   <app-loading-state label="Retrieving context and composing an answer…" />
-} @else if (errorMessage()) {
-  <app-error-state [message]="errorMessage()!" [retryable]="false" />
-} @else if (response(); as result) {
+} @else if (store.error()) {
+  <app-error-state [message]="store.error()!" [retryable]="false" />
+} @else if (store.response(); as result) {
   <section class="card answer" aria-live="polite">
     <h2>Answer</h2>
     <p class="answer__text">{{ result.answer }}</p>

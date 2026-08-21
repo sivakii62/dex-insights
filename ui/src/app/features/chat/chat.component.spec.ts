@@ -1,19 +1,17 @@
 import { provideZonelessChangeDetection } from '@angular/core';
-import { apiPaths } from '../../core/api/api.config';
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
+import { apiPaths } from '../../core/api/api.config';
 import { ChatComponent } from './chat.component';
 
-/**
- * Exposes ChatComponent's protected surface for the test only, so production code can keep its
- * members non-public without the spec resorting to untyped `any` access.
- */
+/** Exposes ChatComponent's protected surface for the test only. */
 type TestableChat = {
   readonly form: ChatComponent['form'];
   readonly exampleQuestions: ChatComponent['exampleQuestions'];
+  readonly store: ChatComponent['store'];
   submit(): void;
   askExample(question: string): void;
 };
@@ -81,6 +79,19 @@ describe('ChatComponent', () => {
     component.askExample(firstExample);
 
     expect(component.form.controls.question.value).toBe(firstExample);
+    httpMock.expectOne(apiPaths.chat()).flush({ answer: '', citations: [], retrievedContextSummary: '' });
+  });
+
+  it('will not submit again while a request is already in flight', () => {
+    const fixture = TestBed.createComponent(ChatComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance as unknown as TestableChat;
+
+    component.form.setValue({ question: 'Summarize store 10001', storeId: '' });
+    component.submit();
+    expect(component.store.loading()).toBe(true);
+
+    component.submit();
     httpMock.expectOne(apiPaths.chat()).flush({ answer: '', citations: [], retrievedContextSummary: '' });
   });
 });
