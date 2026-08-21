@@ -71,6 +71,34 @@ describe('StoreListComponent', () => {
     request.flush(emptyPage);
   });
 
+  it('clears an active brand filter, sort and page back to defaults in one request', () => {
+    const fixture = TestBed.createComponent(StoreListComponent);
+    fixture.detectChanges();
+    const { store } = fixture.componentInstance as unknown as TestableStoreList;
+    httpMock.expectOne((req) => req.url === apiPaths.stores()).flush(emptyPage);
+
+    expect(store.hasActiveFilters()).toBe(false);
+
+    store.setBrand('speedway');
+    fixture.detectChanges();
+    httpMock.expectOne((req) => req.params.get('brand') === 'speedway').flush(emptyPage);
+    expect(store.hasActiveFilters()).toBe(true);
+
+    store.toggleOfflinePumpsSort();
+    fixture.detectChanges();
+    httpMock.expectOne((req) => req.params.get('sortBy') === 'OFFLINE_PUMPS').flush(emptyPage);
+
+    store.clearFilters();
+    fixture.detectChanges();
+
+    expect(store.hasActiveFilters()).toBe(false);
+    const request = httpMock.expectOne((req) => req.url === apiPaths.stores());
+    expect(request.request.params.has('brand')).toBe(false);
+    expect(request.request.params.get('sortBy')).toBe('STORE_ID');
+    expect(request.request.params.get('page')).toBe('0');
+    request.flush(emptyPage);
+  });
+
   it('surfaces a request failure as a readable error message', () => {
     const fixture = TestBed.createComponent(StoreListComponent);
     fixture.detectChanges();

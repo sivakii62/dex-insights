@@ -63,6 +63,9 @@ export const StoreListStore = signalStore(
     offlinePumpsSortState: computed<'none' | 'asc' | 'desc'>(() =>
       sortBy() !== 'OFFLINE_PUMPS' ? 'none' : direction() === 'DESC' ? 'desc' : 'asc',
     ),
+    hasActiveFilters: computed<boolean>(
+      () => brand().trim().length > 0 || status() !== '' || sortBy() !== 'STORE_ID',
+    ),
   })),
   withMethods((store, storeApi = inject(StoreApiService)) => ({
     loadStores: rxMethod<StoreQuery>(
@@ -103,6 +106,16 @@ export const StoreListStore = signalStore(
     },
     previousPage(): void {
       patchState(store, { pageIndex: Math.max(0, store.pageIndex() - 1) });
+    },
+    /** Resets every filter, the sort, and the page back to their defaults in one step. */
+    clearFilters(): void {
+      patchState(store, {
+        brand: initialState.brand,
+        status: initialState.status,
+        sortBy: initialState.sortBy,
+        direction: initialState.direction,
+        pageIndex: initialState.pageIndex,
+      });
     },
   })),
   withHooks({
