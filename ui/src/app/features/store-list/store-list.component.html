@@ -1,0 +1,86 @@
+<section class="card">
+  <h1>Stores</h1>
+
+  <form class="filters" aria-label="Filter stores">
+    <div class="field">
+      <label for="brand-filter">Brand</label>
+      <input
+        id="brand-filter"
+        class="input"
+        type="text"
+        placeholder="e.g. Speedway"
+        [ngModel]="brand()"
+        (ngModelChange)="updateBrand($event)"
+        name="brand"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="field">
+      <label for="status-filter">Status</label>
+      <select id="status-filter" class="select" [ngModel]="status()" (ngModelChange)="updateStatus($event)" name="status">
+        <option value="">All</option>
+        @for (option of statuses; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </div>
+
+    <button type="button" class="btn btn--secondary" (click)="toggleOfflinePumpsSort()">
+      Sort by offline pumps
+      @if (sortBy() === 'OFFLINE_PUMPS') {
+        <span aria-hidden="true">{{ direction() === 'DESC' ? '↓' : '↑' }}</span>
+      }
+    </button>
+  </form>
+
+  @if (storesResource.isLoading()) {
+    <app-loading-state label="Loading stores…" />
+  } @else if (errorMessage()) {
+    <app-error-state [message]="errorMessage()!" (retry)="storesResource.reload()" />
+  } @else if (storesResource.value(); as page) {
+    @if (page.content.length === 0) {
+      <p class="empty-state">No stores match these filters.</p>
+    } @else {
+      <table class="table">
+        <caption class="visually-hidden">Store list, {{ page.totalElements }} total</caption>
+        <thead>
+          <tr>
+            <th scope="col">Store</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Status</th>
+            <th scope="col">Pumps offline</th>
+            <th scope="col">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (store of page.content; track store.storeId) {
+            <tr
+              tabindex="0"
+              role="link"
+              [attr.aria-label]="'View store ' + store.storeId"
+              (click)="openStore(store.storeId)"
+              (keydown.enter)="openStore(store.storeId)"
+            >
+              <td><a [routerLink]="['/stores', store.storeId]" (click)="$event.stopPropagation()">{{ store.storeId }}</a></td>
+              <td>{{ store.brand }}</td>
+              <td><app-status-badge [label]="store.status" /></td>
+              <td>{{ store.offlinePumps }} / {{ store.totalPumps }}</td>
+              <td>{{ store.storeAddress?.city }}, {{ store.storeAddress?.state }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <nav class="pagination" aria-label="Store list pages">
+        <button type="button" class="btn btn--secondary" [disabled]="page.page === 0" (click)="previousPage()">
+          Previous
+        </button>
+        <span aria-live="polite">Page {{ page.page + 1 }} of {{ page.totalPages || 1 }}</span>
+        <button type="button" class="btn btn--secondary" [disabled]="!page.hasNext" (click)="nextPage()">
+          Next
+        </button>
+      </nav>
+    }
+  }
+</section>

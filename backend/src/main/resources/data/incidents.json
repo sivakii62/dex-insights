@@ -1,0 +1,74 @@
+[
+  {
+    "incidentId": "INC-10002-0001",
+    "storeId": "10002",
+    "timestamp": "2026-03-02T06:12:00.000Z",
+    "severity": "HIGH",
+    "category": "PUMP",
+    "description": "Multiple dispensers offline and intermittent forecourt controller connectivity.",
+    "status": "OPEN"
+  },
+  {
+    "incidentId": "INC-10002-0002",
+    "storeId": "10002",
+    "timestamp": "2026-03-02T06:45:10.000Z",
+    "severity": "MEDIUM",
+    "category": "ATG",
+    "description": "Low diesel tank level detected; projected runout risk within 24 hours.",
+    "status": "ACKNOWLEDGED"
+  },
+  {
+    "incidentId": "INC-10004-0001",
+    "storeId": "10004",
+    "timestamp": "2026-03-02T07:40:00.000Z",
+    "severity": "HIGH",
+    "category": "NETWORK",
+    "description": "Store offline: network unreachable; transactions not reported.",
+    "status": "OPEN"
+  },
+  {
+    "incidentId": "INC-10006-0001",
+    "storeId": "10006",
+    "timestamp": "2026-03-02T05:10:00.000Z",
+    "severity": "MEDIUM",
+    "category": "POS",
+    "description": "POS latency spikes observed; customer impact reported during peak hours.",
+    "status": "RESOLVED"
+  },
+  {
+    "incidentId": "INC-10009-0001",
+    "storeId": "10009",
+    "timestamp": "2026-03-02T06:05:30.000Z",
+    "severity": "HIGH",
+    "category": "PUMP",
+    "description": "Two pumps offline; recurring error code reported by dispenser controller.",
+    "status": "OPEN"
+  },
+  {
+    "incidentId": "INC-10008-0001",
+    "storeId": "10008",
+    "timestamp": "2026-03-02T04:20:00.000Z",
+    "severity": "LOW",
+    "category": "ATG",
+    "description": "ATG poll delayed; latest tank level update is older than expected.",
+    "status": "ACKNOWLEDGED"
+  },
+  {
+    "incidentId": "INC-10003-0001",
+    "storeId": "10003",
+    "timestamp": "2026-03-02T03:15:00.000Z",
+    "severity": "LOW",
+    "category": "PUMP",
+    "description": "Single dispenser reported low flow rate; monitor for recurrence.",
+    "status": "RESOLVED"
+  },
+  {
+    "incidentId": "INC-10001-0001",
+    "storeId": "10001",
+    "timestamp": "2026-03-02T02:00:00.000Z",
+    "severity": "LOW",
+    "category": "POS",
+    "description": "Brief POS disconnect; self-recovered.",
+    "status": "RESOLVED"
+  }
+]

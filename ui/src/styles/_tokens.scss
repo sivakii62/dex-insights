@@ -1,0 +1,68 @@
+// Design tokens. A hand-rolled system rather than a component library: the app is four screens,
+// so a token layer plus a handful of shared primitives keeps things consistent without the
+// bundle size or the generic look of a full framework.
+:root {
+  --color-bg: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-border: #dde1e6;
+  --color-text: #1b1f24;
+  --color-text-muted: #5b6470;
+  --color-primary: #1b56fd;
+  --color-primary-fg: #ffffff;
+  --color-primary-hover: #1443cc;
+
+  --color-positive-bg: #e3f6e8;
+  --color-positive-fg: #1d7a3c;
+  --color-warning-bg: #fff3d9;
+  --color-warning-fg: #93650a;
+  --color-critical-bg: #fde5e5;
+  --color-critical-fg: #b3261e;
+  --color-neutral-bg: #eceff2;
+  --color-neutral-fg: #495057;
+
+  --font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+
+  --focus-ring: 0 0 0 3px rgba(27, 86, 253, 0.35);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #14171c;
+    --color-surface: #1b1f26;
+    --color-border: #2b313b;
+    --color-text: #eef1f5;
+    --color-text-muted: #9aa4b2;
+    --color-primary: #5c85ff;
+    --color-primary-fg: #0b132a;
+    --color-primary-hover: #7fa0ff;
+
+    --color-positive-bg: #113321;
+    --color-positive-fg: #6fe19a;
+    --color-warning-bg: #3a2c0c;
+    --color-warning-fg: #f0c15c;
+    --color-critical-bg: #3a1414;
+    --color-critical-fg: #ff9c94;
+    --color-neutral-bg: #262c35;
+    --color-neutral-fg: #c2c9d3;
+
+    color-scheme: dark;
+  }
+}

@@ -1,0 +1,89 @@
+<h1>Insights</h1>
+
+@if (overviewResource.isLoading()) {
+  <app-loading-state label="Loading insights…" />
+} @else if (errorMessage()) {
+  <app-error-state [message]="errorMessage()!" (retry)="overviewResource.reload()" />
+} @else if (overviewResource.value(); as overview) {
+  <section class="card metrics-grid" aria-label="Fleet summary">
+    <div class="metric">
+      <span class="metric__label">Stores</span>
+      <span class="metric__value">{{ overview.fleet.totalStores }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric__label">Pump availability</span>
+      <span class="metric__value">{{ overview.fleet.pumpAvailability | percent: '1.0-0' }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric__label">Offline pumps</span>
+      <span class="metric__value">{{ overview.fleet.offlinePumps }} / {{ overview.fleet.totalPumps }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric__label">HyperCare stores</span>
+      <span class="metric__value">{{ overview.fleet.hyperCareStores }}</span>
+    </div>
+    <div class="metric">
+      <span class="metric__label">Active incidents</span>
+      <span class="metric__value">{{ overview.fleet.activeIncidents }}</span>
+    </div>
+  </section>
+
+  <div class="two-column">
+    <section class="card">
+      <h2>Top stores by offline pumps</h2>
+      @if (overview.topStoresByOfflinePumps.length === 0) {
+        <p class="empty-state">No stores currently have pumps offline.</p>
+      } @else {
+        <ul class="ranked-list">
+          @for (store of overview.topStoresByOfflinePumps; track store.storeId) {
+            <li>
+              <a [routerLink]="['/stores', store.storeId]" class="ranked-list__title">
+                Store {{ store.storeId }} · {{ store.brand }}
+              </a>
+              <span class="ranked-list__meta">
+                {{ store.offlinePumps }} / {{ store.totalPumps }} offline · {{ store.location }}
+                @if (store.openIncidents > 0) {
+                  · {{ store.openIncidents }} open incident{{ store.openIncidents === 1 ? '' : 's' }}
+                }
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <section class="card">
+      <h2>Tank runout risks</h2>
+      @if (overview.tankRunoutRisks.length === 0) {
+        <p class="empty-state">No tanks are at or below the low-level threshold.</p>
+      } @else {
+        <ul class="ranked-list">
+          @for (risk of overview.tankRunoutRisks; track risk.storeId + risk.gradeName) {
+            <li>
+              <a [routerLink]="['/stores', risk.storeId]" class="ranked-list__title">
+                Store {{ risk.storeId }} · {{ risk.gradeName }}
+              </a>
+              <span class="ranked-list__meta">
+                {{ risk.levelGallons }} / {{ risk.capacityGallons }} gal
+                ({{ risk.fillRatio | percent: '1.0-0' }} full) · {{ risk.location }}
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Incidents by severity</h2>
+    <div class="severity-row">
+      @for (entry of overview.incidents.bySeverity | keyvalue; track entry.key) {
+        <app-status-badge [label]="entry.key + ': ' + entry.value" [tone]="severityTone(entry.key)" />
+      }
+    </div>
+    <p class="incidents-summary">
+      {{ overview.incidents.total }} total incident{{ overview.incidents.total === 1 ? '' : 's' }},
+      {{ overview.incidents.active }} still active.
+    </p>
+  </section>
+}

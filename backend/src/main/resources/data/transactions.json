@@ -1,0 +1,152 @@
+[
+  {
+    "transactionId": "TX-10001-0001",
+    "storeId": "10001",
+    "gradeName": "Regular",
+    "transactionAmnt": "42.18",
+    "volume": "12.3",
+    "dispenserId": 3,
+    "transactionStartTime": "2026-03-01T10:02:10.000Z",
+    "transactionEndTime": "2026-03-01T10:06:01.000Z"
+  },
+  {
+    "transactionId": "TX-10001-0002",
+    "storeId": "10001",
+    "gradeName": "Premium",
+    "transactionAmnt": "58.42",
+    "volume": "11.0",
+    "dispenserId": 5,
+    "transactionStartTime": "2026-03-01T13:10:05.000Z",
+    "transactionEndTime": "2026-03-01T13:14:10.000Z"
+  },
+  {
+    "transactionId": "TX-10002-0001",
+    "storeId": "10002",
+    "gradeName": "Regular",
+    "transactionAmnt": "35.09",
+    "volume": "10.2",
+    "dispenserId": 1,
+    "transactionStartTime": "2026-03-01T09:22:44.000Z",
+    "transactionEndTime": "2026-03-01T09:26:10.000Z"
+  },
+  {
+    "transactionId": "TX-10002-0002",
+    "storeId": "10002",
+    "gradeName": "Diesel",
+    "transactionAmnt": "92.15",
+    "volume": "18.8",
+    "dispenserId": 8,
+    "transactionStartTime": "2026-03-01T15:41:12.000Z",
+    "transactionEndTime": "2026-03-01T15:46:00.000Z"
+  },
+  {
+    "transactionId": "TX-10003-0001",
+    "storeId": "10003",
+    "gradeName": "Regular",
+    "transactionAmnt": "27.55",
+    "volume": "8.1",
+    "dispenserId": 2,
+    "transactionStartTime": "2026-03-01T11:05:30.000Z",
+    "transactionEndTime": "2026-03-01T11:08:40.000Z"
+  },
+  {
+    "transactionId": "TX-10004-0001",
+    "storeId": "10004",
+    "gradeName": "Regular",
+    "transactionAmnt": "0.00",
+    "volume": "0.0",
+    "dispenserId": 0,
+    "transactionStartTime": "2026-03-01T12:00:00.000Z",
+    "transactionEndTime": "2026-03-01T12:00:00.000Z"
+  },
+  {
+    "transactionId": "TX-10005-0001",
+    "storeId": "10005",
+    "gradeName": "Regular",
+    "transactionAmnt": "49.99",
+    "volume": "13.7",
+    "dispenserId": 4,
+    "transactionStartTime": "2026-03-01T18:22:00.000Z",
+    "transactionEndTime": "2026-03-01T18:27:15.000Z"
+  },
+  {
+    "transactionId": "TX-10006-0001",
+    "storeId": "10006",
+    "gradeName": "Premium",
+    "transactionAmnt": "76.20",
+    "volume": "14.1",
+    "dispenserId": 11,
+    "transactionStartTime": "2026-03-01T07:45:22.000Z",
+    "transactionEndTime": "2026-03-01T07:50:02.000Z"
+  },
+  {
+    "transactionId": "TX-10006-0002",
+    "storeId": "10006",
+    "gradeName": "Regular",
+    "transactionAmnt": "31.60",
+    "volume": "9.5",
+    "dispenserId": 6,
+    "transactionStartTime": "2026-03-01T20:02:10.000Z",
+    "transactionEndTime": "2026-03-01T20:06:01.000Z"
+  },
+  {
+    "transactionId": "TX-10007-0001",
+    "storeId": "10007",
+    "gradeName": "Diesel",
+    "transactionAmnt": "88.88",
+    "volume": "17.2",
+    "dispenserId": 7,
+    "transactionStartTime": "2026-03-01T14:12:12.000Z",
+    "transactionEndTime": "2026-03-01T14:17:00.000Z"
+  },
+  {
+    "transactionId": "TX-10008-0001",
+    "storeId": "10008",
+    "gradeName": "Regular",
+    "transactionAmnt": "22.40",
+    "volume": "6.6",
+    "dispenserId": 1,
+    "transactionStartTime": "2026-03-01T08:30:30.000Z",
+    "transactionEndTime": "2026-03-01T08:33:15.000Z"
+  },
+  {
+    "transactionId": "TX-10009-0001",
+    "storeId": "10009",
+    "gradeName": "Regular",
+    "transactionAmnt": "19.95",
+    "volume": "6.1",
+    "dispenserId": 3,
+    "transactionStartTime": "2026-03-01T16:40:00.000Z",
+    "transactionEndTime": "2026-03-01T16:43:10.000Z"
+  },
+  {
+    "transactionId": "TX-10010-0001",
+    "storeId": "10010",
+    "gradeName": "Regular",
+    "transactionAmnt": "55.00",
+    "volume": "15.0",
+    "dispenserId": 9,
+    "transactionStartTime": "2026-03-01T19:05:05.000Z",
+    "transactionEndTime": "2026-03-01T19:09:30.000Z"
+  },
+  {
+    "transactionId": "TX-10002-0003",
+    "storeId": "10002",
+    "gradeName": "Regular",
+    "transactionAmnt": "12.34",
+    "volume": "3.8",
+    "dispenserId": 2,
+    "transactionStartTime": "2026-03-01T23:58:00.000Z",
+    "transactionEndTime": "2026-03-02T00:01:00.000Z"
+  },
+  {
+    "transactionId": "TX-10009-0002",
+    "storeId": "10009",
+    "gradeName": "Regular",
+    "transactionAmnt": "14.10",
+    "volume": "4.3",
+    "dispenserId": 4,
+    "transactionStartTime": "2026-03-02T01:10:00.000Z",
+    "transactionEndTime": "2026-03-02T01:13:12.000Z"
+  }
+]

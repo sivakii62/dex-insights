@@ -1,0 +1,119 @@
+.intro {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  max-width: 60ch;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.field--inline {
+  max-width: 220px;
+}
+
+textarea.input {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.field-error {
+  color: var(--color-critical-fg);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+
+  &__label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-right: var(--space-1);
+  }
+}
+
+.chip {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+.answer {
+  margin-top: var(--space-5);
+
+  &__text {
+    white-space: pre-line;
+    line-height: 1.6;
+  }
+
+  &__summary {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-top: var(--space-3);
+  }
+}
+
+.citation-list {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.citation {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+
+  &__type {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    padding-top: 2px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__id {
+    font-weight: 600;
+    font-size: 0.9rem;
+
+    a {
+      color: var(--color-primary);
+    }
+  }
+
+  &__snippet {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+}

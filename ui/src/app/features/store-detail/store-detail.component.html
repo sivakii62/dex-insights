@@ -1,0 +1,73 @@
+<a class="back-link" routerLink="/stores">&larr; Back to stores</a>
+
+@if (storeResource.isLoading()) {
+  <app-loading-state label="Loading store…" />
+} @else if (errorMessage()) {
+  <app-error-state [message]="errorMessage()!" (retry)="storeResource.reload()" />
+} @else if (storeResource.value(); as store) {
+  <section class="card store-header">
+    <div>
+      <h1>Store {{ store.storeId }}</h1>
+      <p class="store-header__meta">
+        {{ store.brand }} · {{ store.storeAddress?.city }}, {{ store.storeAddress?.state }}
+      </p>
+    </div>
+    <app-status-badge [label]="store.status" />
+  </section>
+
+  <section class="card stats-grid" aria-label="Store metrics">
+    <div class="stat">
+      <span class="stat__label">Pumps</span>
+      <span class="stat__value">{{ store.activePumps }} / {{ store.totalPumps }} active</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Offline pumps</span>
+      <span class="stat__value">{{ store.offlinePumps }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Anomaly count</span>
+      <span class="stat__value">{{ store.anomalyCount }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">HyperCare</span>
+      <span class="stat__value">{{ store.hyperCare ? 'Enabled' : 'Disabled' }}</span>
+    </div>
+    <div class="stat">
+      <span class="stat__label">Last updated</span>
+      <span class="stat__value">{{ store.lastUpdatedTime | date: 'medium' }}</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Tank levels</h2>
+    @if (store.tanks.length === 0) {
+      <p class="empty-state">No tank gauge readings for this store.</p>
+    } @else {
+      <table class="table">
+        <caption class="visually-hidden">Tank levels for store {{ store.storeId }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Grade</th>
+            <th scope="col">Level</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Fill</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tank of store.tanks; track tank.gradeName) {
+            <tr>
+              <td>{{ tank.gradeName }}</td>
+              <td>{{ tank.levelGallons }} gal</td>
+              <td>{{ tank.capacityGallons }} gal</td>
+              <td>
+                <div class="fill-bar" role="img" [attr.aria-label]="tank.gradeName + ' tank ' + ((tank.levelGallons / tank.capacityGallons) * 100 | number: '1.0-0') + ' percent full'">
+                  <span class="fill-bar__value" [style.width.%]="(tank.levelGallons / tank.capacityGallons) * 100"></span>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </section>
+}
