@@ -20,3 +20,26 @@
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
+
+// Row navigation as one real link, not a click handler duplicated onto the <tr>. The anchor's
+// ::after is stretched over the whole row via position: relative on the row, so clicking anywhere
+// in the row activates the same link a keyboard or screen-reader user would use — no nested
+// interactive elements, no stopPropagation, and no separate "row click" affordance to keep in sync.
+.table tbody tr {
+  position: relative;
+}
+
+.row-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}

@@ -83,14 +83,10 @@
         </thead>
         <tbody>
           @for (item of page.content; track item.storeId) {
-            <tr
-              tabindex="0"
-              role="link"
-              [attr.aria-label]="'View store ' + item.storeId"
-              (click)="openStore(item.storeId)"
-              (keydown.enter)="openStore(item.storeId)"
-            >
-              <td><a [routerLink]="['/stores', item.storeId]" (click)="$event.stopPropagation()">{{ item.storeId }}</a></td>
+            <tr>
+              <td>
+                <a class="row-link" [routerLink]="['/stores', item.storeId]">{{ item.storeId }}</a>
+              </td>
               <td>{{ item.brand }}</td>
               <td><app-status-badge [label]="item.status" /></td>
               <td>{{ item.offlinePumps }} / {{ item.totalPumps }}</td>
