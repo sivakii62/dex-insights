@@ -3,12 +3,12 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import type { Page } from '../models/page.model';
 import type { Store, StoreQuery } from '../models/store.model';
+import { apiPaths } from './api.config';
 
-/** Thin HTTP client for the /v1/stores endpoints. No caching: the dataset is small and read-only. */
+/** Thin HTTP client for the stores endpoints. No caching: the dataset is small and read-only. */
 @Injectable({ providedIn: 'root' })
 export class StoreApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/v1/stores';
 
   list(query: StoreQuery): Observable<Page<Store>> {
     let params = new HttpParams();
@@ -19,10 +19,10 @@ export class StoreApiService {
     if (query.page !== undefined) params = params.set('page', query.page);
     if (query.size !== undefined) params = params.set('size', query.size);
 
-    return this.http.get<Page<Store>>(this.baseUrl, { params });
+    return this.http.get<Page<Store>>(apiPaths.stores(), { params });
   }
 
   getById(storeId: string): Observable<Store> {
-    return this.http.get<Store>(`${this.baseUrl}/${encodeURIComponent(storeId)}`);
+    return this.http.get<Store>(apiPaths.store(storeId));
   }
 }

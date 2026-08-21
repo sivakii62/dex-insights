@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { apiPaths } from '../../core/api/api.config';
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
@@ -42,7 +43,7 @@ describe('ChatComponent', () => {
 
     component.submit();
 
-    httpMock.expectNone('/v1/chat');
+    httpMock.expectNone(apiPaths.chat());
     expect(component.form.controls.question.touched).toBe(true);
   });
 
@@ -54,7 +55,7 @@ describe('ChatComponent', () => {
     component.form.setValue({ question: 'Summarize store 10001', storeId: '10001' });
     component.submit();
 
-    const request = httpMock.expectOne('/v1/chat');
+    const request = httpMock.expectOne(apiPaths.chat());
     expect(request.request.body).toEqual({ question: 'Summarize store 10001', storeId: '10001' });
 
     request.flush({
@@ -80,6 +81,6 @@ describe('ChatComponent', () => {
     component.askExample(firstExample);
 
     expect(component.form.controls.question.value).toBe(firstExample);
-    httpMock.expectOne('/v1/chat').flush({ answer: '', citations: [], retrievedContextSummary: '' });
+    httpMock.expectOne(apiPaths.chat()).flush({ answer: '', citations: [], retrievedContextSummary: '' });
   });
 });
