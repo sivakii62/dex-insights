@@ -142,10 +142,14 @@ the right default for a web tier and costs nothing to enable.
 MDC, the log pattern, and every response header, so a specific failure can be traced from a support
 ticket back to a log line without guessing.
 
-**Angular 21, zoneless, with `rxResource` instead of a state library.** Four screens' worth of
-server-driven state doesn't justify NgRx; each feature's loading/error/value state comes off one
-signal-based resource tied to its query params, which is less code and less indirection than actions
-and reducers would be here. Zoneless was the scaffold's default (no `zone.js` dependency), so change
+**Angular 21, zoneless, with `@ngrx/signals` `SignalStore` for state.** Each feature (store list,
+store detail, insights, chat) owns one `SignalStore`: state, a `computed` derived query where one
+exists, and a `rxMethod` that calls the API and writes loading/error/value back via `patchState`.
+That's NgRx without the classic ceremony — no actions, reducers, effects or selectors, and no
+global store: every `SignalStore` is provided in its routed component's own `providers` array, so
+its state starts fresh each time that route is entered rather than leaking across navigations or
+needing manual reset. Components stay thin — they inject the store and call its methods; templates
+read its signals directly. Zoneless was the scaffold's default (no `zone.js` dependency), so change
 detection runs on signal writes rather than on every browser event — kept as-is rather than added
 back.
 

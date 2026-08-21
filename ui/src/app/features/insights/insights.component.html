@@ -1,10 +1,10 @@
 <h1>Insights</h1>
 
-@if (overviewResource.isLoading()) {
+@if (store.loading()) {
   <app-loading-state label="Loading insights…" />
-} @else if (errorMessage()) {
-  <app-error-state [message]="errorMessage()!" (retry)="overviewResource.reload()" />
-} @else if (overviewResource.value(); as overview) {
+} @else if (store.error()) {
+  <app-error-state [message]="store.error()!" (retry)="store.loadOverview()" />
+} @else if (store.overview(); as overview) {
   <section class="card metrics-grid" aria-label="Fleet summary">
     <div class="metric">
       <span class="metric__label">Stores</span>
