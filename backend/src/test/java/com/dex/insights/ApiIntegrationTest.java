@@ -1,5 +1,6 @@
 package com.dex.insights;
 
+import com.dex.insights.web.ApiPaths;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ class ApiIntegrationTest {
 
     @Test
     void listsStoresSortedByOfflinePumpsDescending() throws Exception {
-        mockMvc.perform(get("/v1/stores")
+        mockMvc.perform(get(ApiPaths.STORES)
                         .param("sortBy", "OFFLINE_PUMPS")
                         .param("direction", "DESC")
                         .param("size", "3"))
@@ -42,7 +43,7 @@ class ApiIntegrationTest {
 
     @Test
     void filtersStoresByBrandAndStatus() throws Exception {
-        mockMvc.perform(get("/v1/stores").param("brand", "speedway").param("status", "ONLINE"))
+        mockMvc.perform(get(ApiPaths.STORES).param("brand", "speedway").param("status", "ONLINE"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[*].brand").value(org.hamcrest.Matchers.everyItem(
                         org.hamcrest.Matchers.equalTo("Speedway"))));
@@ -50,7 +51,7 @@ class ApiIntegrationTest {
 
     @Test
     void returnsAProblemDetailForAnUnknownStore() throws Exception {
-        mockMvc.perform(get("/v1/stores/99999"))
+        mockMvc.perform(get(ApiPaths.STORES + "/99999"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.title").value("Resource not found"))
                 .andExpect(jsonPath("$.identifier").value("99999"))
@@ -59,14 +60,14 @@ class ApiIntegrationTest {
 
     @Test
     void rejectsAnUnknownStatusWithAHelpfulProblemDetail() throws Exception {
-        mockMvc.perform(get("/v1/stores").param("status", "BROKEN"))
+        mockMvc.perform(get(ApiPaths.STORES).param("status", "BROKEN"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.detail").value(org.hamcrest.Matchers.containsString("ONLINE")));
     }
 
     @Test
     void returnsTheOperationalOverview() throws Exception {
-        mockMvc.perform(get("/v1/insights/overview"))
+        mockMvc.perform(get(ApiPaths.INSIGHTS + "/overview"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fleet.totalStores").value(10))
                 .andExpect(jsonPath("$.topStoresByOfflinePumps[0].storeId").value("10004"))
@@ -77,7 +78,7 @@ class ApiIntegrationTest {
 
     @Test
     void answersAGroundedQuestionWithCitations() throws Exception {
-        mockMvc.perform(post("/v1/chat")
+        mockMvc.perform(post(ApiPaths.CHAT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(Map.of(
                                 "question", "Summarize store 10001 health and recent activity",
@@ -93,7 +94,7 @@ class ApiIntegrationTest {
 
     @Test
     void rejectsABlankQuestion() throws Exception {
-        mockMvc.perform(post("/v1/chat")
+        mockMvc.perform(post(ApiPaths.CHAT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"question\":\"  \"}"))
                 .andExpect(status().isBadRequest())
@@ -106,6 +107,6 @@ class ApiIntegrationTest {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.info.title").value("Dex Insights API"))
-                .andExpect(jsonPath("$.paths['/v1/chat']").exists());
+                .andExpect(jsonPath("$.paths['" + ApiPaths.CHAT + "']").exists());
     }
 }

@@ -33,6 +33,12 @@ class StoreServiceTest {
     }
 
     @Test
+    void filtersByBrandAsAPartialSubstringMatch() {
+        assertThat(service.search("7", null, StoreSortField.STORE_ID, SortDirection.ASC, 0, 20).content())
+                .extracting(Store::storeId).containsExactly("10001");
+    }
+
+    @Test
     void pagesResultsAndReportsWhetherMoreRemain() {
         PageResponse<Store> first = service.search(null, null, StoreSortField.STORE_ID, SortDirection.ASC, 0, 2);
         PageResponse<Store> second = service.search(null, null, StoreSortField.STORE_ID, SortDirection.ASC, 1, 2);

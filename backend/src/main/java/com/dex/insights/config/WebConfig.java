@@ -1,5 +1,6 @@
 package com.dex.insights.config;
 
+import com.dex.insights.web.ApiPaths;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -20,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         if (corsProperties.allowedOrigins().isEmpty()) {
             return;
         }
-        registry.addMapping("/v1/**")
+        registry.addMapping(ApiPaths.VERSION_WILDCARD)
                 .allowedOrigins(corsProperties.allowedOrigins().toArray(String[]::new))
                 .allowedMethods("GET", "POST", "OPTIONS")
                 .allowedHeaders("*")

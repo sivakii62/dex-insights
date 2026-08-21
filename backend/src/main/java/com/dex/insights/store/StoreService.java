@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /** Filtering, sorting and paging over the in-memory store snapshot. */
 @Service
@@ -22,7 +23,8 @@ public class StoreService {
     }
 
     /**
-     * @param brand  case-insensitive exact brand match, or null for all brands
+     * @param brand  case-insensitive substring match against the brand name (e.g. "7" matches
+     *               "7-Eleven"), or null for all brands
      * @param status operational status filter, or null for all statuses
      */
     public PageResponse<Store> search(String brand, StoreStatus status, StoreSortField sortBy,
@@ -32,8 +34,10 @@ public class StoreService {
             comparator = comparator.reversed();
         }
 
+        String brandTerm = StringUtils.hasText(brand) ? brand.trim().toLowerCase(Locale.ROOT) : null;
+
         List<Store> matches = storeRepository.findAll().stream()
-                .filter(store -> !StringUtils.hasText(brand) || brand.equalsIgnoreCase(store.brand()))
+                .filter(store -> brandTerm == null || store.brand().toLowerCase(Locale.ROOT).contains(brandTerm))
                 .filter(store -> status == null || status == store.status())
                 .sorted(comparator)
                 .toList();

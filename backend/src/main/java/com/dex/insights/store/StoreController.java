@@ -2,6 +2,7 @@ package com.dex.insights.store;
 
 import com.dex.insights.domain.Store;
 import com.dex.insights.domain.StoreStatus;
+import com.dex.insights.web.ApiPaths;
 import com.dex.insights.web.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/stores")
+@RequestMapping(ApiPaths.STORES)
 @Validated
 @Tag(name = "Stores", description = "Store operational status snapshots")
 public class StoreController {
@@ -32,7 +33,7 @@ public class StoreController {
     @Operation(summary = "List stores",
             description = "Filter by brand and status, sort by any supported field, and page through results.")
     public PageResponse<Store> listStores(
-            @Parameter(description = "Exact brand match, case-insensitive") @RequestParam(required = false) String brand,
+            @Parameter(description = "Case-insensitive substring match against the brand name") @RequestParam(required = false) String brand,
             @Parameter(description = "Operational status") @RequestParam(required = false) StoreStatus status,
             @RequestParam(defaultValue = "STORE_ID") StoreSortField sortBy,
             @RequestParam(defaultValue = "ASC") SortDirection direction,
