@@ -1,0 +1,253 @@
+[
+  {
+    "STOREID": "10001",
+    "BRAND": "7-Eleven",
+    "status": "ONLINE",
+    "totalPumps": 8,
+    "activePumps": 8,
+    "offlinePumps": 0,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:15:22.120Z",
+    "storeAddress": { "state": "TX", "city": "Austin" },
+    "latitude": "30.2672",
+    "longitude": "-97.7431",
+    "anomalyCount": 0,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 10000,
+        "levelGallons": 6400,
+        "ullageGallons": 3600,
+        "lastUpdatedTime": "2026-03-02T08:10:00.000Z"
+      },
+      {
+        "gradeName": "Premium",
+        "capacityGallons": 6000,
+        "levelGallons": 3800,
+        "ullageGallons": 2200,
+        "lastUpdatedTime": "2026-03-02T08:10:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10002",
+    "BRAND": "7-Eleven",
+    "status": "DEGRADED",
+    "totalPumps": 10,
+    "activePumps": 7,
+    "offlinePumps": 3,
+    "hyperCare": true,
+    "lastUpdatedTime": "2026-03-02T08:14:01.550Z",
+    "storeAddress": { "state": "TX", "city": "Dallas" },
+    "latitude": "32.7767",
+    "longitude": "-96.7970",
+    "anomalyCount": 3,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 12000,
+        "levelGallons": 2100,
+        "ullageGallons": 9900,
+        "lastUpdatedTime": "2026-03-02T08:05:00.000Z"
+      },
+      {
+        "gradeName": "Diesel",
+        "capacityGallons": 8000,
+        "levelGallons": 900,
+        "ullageGallons": 7100,
+        "lastUpdatedTime": "2026-03-02T08:05:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10003",
+    "BRAND": "Speedway",
+    "status": "ONLINE",
+    "totalPumps": 6,
+    "activePumps": 6,
+    "offlinePumps": 0,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:13:10.005Z",
+    "storeAddress": { "state": "IL", "city": "Chicago" },
+    "latitude": "41.8781",
+    "longitude": "-87.6298",
+    "anomalyCount": 1,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 9000,
+        "levelGallons": 4200,
+        "ullageGallons": 4800,
+        "lastUpdatedTime": "2026-03-02T08:08:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10004",
+    "BRAND": "Speedway",
+    "status": "OFFLINE",
+    "totalPumps": 12,
+    "activePumps": 0,
+    "offlinePumps": 12,
+    "hyperCare": true,
+    "lastUpdatedTime": "2026-03-02T07:59:44.300Z",
+    "storeAddress": { "state": "OH", "city": "Columbus" },
+    "latitude": "39.9612",
+    "longitude": "-82.9988",
+    "anomalyCount": 5,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 15000,
+        "levelGallons": 11500,
+        "ullageGallons": 3500,
+        "lastUpdatedTime": "2026-03-02T07:50:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10005",
+    "BRAND": "7-Eleven",
+    "status": "ONLINE",
+    "totalPumps": 4,
+    "activePumps": 4,
+    "offlinePumps": 0,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:12:09.999Z",
+    "storeAddress": { "state": "CA", "city": "San Jose" },
+    "latitude": "37.3382",
+    "longitude": "-121.8863",
+    "anomalyCount": 0,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 8000,
+        "levelGallons": 7600,
+        "ullageGallons": 400,
+        "lastUpdatedTime": "2026-03-02T08:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10006",
+    "BRAND": "7-Eleven",
+    "status": "DEGRADED",
+    "totalPumps": 14,
+    "activePumps": 11,
+    "offlinePumps": 3,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:11:30.432Z",
+    "storeAddress": { "state": "FL", "city": "Orlando" },
+    "latitude": "28.5383",
+    "longitude": "-81.3792",
+    "anomalyCount": 2,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 11000,
+        "levelGallons": 3000,
+        "ullageGallons": 8000,
+        "lastUpdatedTime": "2026-03-02T08:02:00.000Z"
+      },
+      {
+        "gradeName": "Premium",
+        "capacityGallons": 7000,
+        "levelGallons": 1200,
+        "ullageGallons": 5800,
+        "lastUpdatedTime": "2026-03-02T08:02:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10007",
+    "BRAND": "Speedway",
+    "status": "ONLINE",
+    "totalPumps": 10,
+    "activePumps": 10,
+    "offlinePumps": 0,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:10:15.110Z",
+    "storeAddress": { "state": "GA", "city": "Atlanta" },
+    "latitude": "33.7490",
+    "longitude": "-84.3880",
+    "anomalyCount": 1,
+    "tanks": [
+      {
+        "gradeName": "Diesel",
+        "capacityGallons": 9000,
+        "levelGallons": 5200,
+        "ullageGallons": 3800,
+        "lastUpdatedTime": "2026-03-02T08:01:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10008",
+    "BRAND": "7-Eleven",
+    "status": "ONLINE",
+    "totalPumps": 6,
+    "activePumps": 5,
+    "offlinePumps": 1,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:09:22.222Z",
+    "storeAddress": { "state": "WA", "city": "Seattle" },
+    "latitude": "47.6062",
+    "longitude": "-122.3321",
+    "anomalyCount": 0,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 9500,
+        "levelGallons": 2600,
+        "ullageGallons": 6900,
+        "lastUpdatedTime": "2026-03-02T07:58:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10009",
+    "BRAND": "Speedway",
+    "status": "DEGRADED",
+    "totalPumps": 8,
+    "activePumps": 6,
+    "offlinePumps": 2,
+    "hyperCare": true,
+    "lastUpdatedTime": "2026-03-02T08:08:08.808Z",
+    "storeAddress": { "state": "NC", "city": "Charlotte" },
+    "latitude": "35.2271",
+    "longitude": "-80.8431",
+    "anomalyCount": 4,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 10000,
+        "levelGallons": 1400,
+        "ullageGallons": 8600,
+        "lastUpdatedTime": "2026-03-02T07:55:00.000Z"
+      }
+    ]
+  },
+  {
+    "STOREID": "10010",
+    "BRAND": "7-Eleven",
+    "status": "ONLINE",
+    "totalPumps": 12,
+    "activePumps": 12,
+    "offlinePumps": 0,
+    "hyperCare": false,
+    "lastUpdatedTime": "2026-03-02T08:07:07.007Z",
+    "storeAddress": { "state": "AZ", "city": "Phoenix" },
+    "latitude": "33.4484",
+    "longitude": "-112.0740",
+    "anomalyCount": 0,
+    "tanks": [
+      {
+        "gradeName": "Regular",
+        "capacityGallons": 13000,
+        "levelGallons": 8900,
+        "ullageGallons": 4100,
+        "lastUpdatedTime": "2026-03-02T08:03:00.000Z"
+      }
+    ]
+  }
+]

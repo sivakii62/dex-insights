@@ -1,0 +1,14 @@
+<a class="visually-hidden" href="#main-content">Skip to main content</a>
+
+<header class="app-header">
+  <div class="app-header__brand">Dex Insights</div>
+  <nav class="app-header__nav" aria-label="Primary">
+    @for (link of navLinks; track link.path) {
+      <a [routerLink]="link.path" routerLinkActive="is-active" class="app-header__link">{{ link.label }}</a>
+    }
+  </nav>
+</header>
+
+<main id="main-content" class="app-main">
+  <router-outlet />
+</main>

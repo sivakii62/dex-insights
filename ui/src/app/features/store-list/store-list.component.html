@@ -1,0 +1,114 @@
+<section class="card">
+  <h1>Stores</h1>
+
+  <form class="filters" aria-label="Filter stores">
+    <div class="field">
+      <label for="brand-filter">Brand</label>
+      <input
+        id="brand-filter"
+        class="input"
+        type="text"
+        placeholder="e.g. Speedway"
+        [ngModel]="store.brand()"
+        (ngModelChange)="updateBrand($event)"
+        name="brand"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="field">
+      <label for="status-filter">Status</label>
+      <select id="status-filter" class="select" [ngModel]="store.status()" (ngModelChange)="updateStatus($event)" name="status">
+        <option value="">All</option>
+        @for (option of statuses; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn--secondary"
+      [attr.aria-pressed]="store.offlinePumpsSortState() !== 'none'"
+      [attr.aria-label]="
+        'Sort by offline pumps: ' +
+        (store.offlinePumpsSortState() === 'desc'
+          ? 'highest first'
+          : store.offlinePumpsSortState() === 'asc'
+            ? 'lowest first'
+            : 'unsorted')
+      "
+      (click)="store.toggleOfflinePumpsSort()"
+    >
+      Sort by offline pumps
+      @switch (store.offlinePumpsSortState()) {
+        @case ('desc') {
+          <span aria-hidden="true">↓</span>
+        }
+        @case ('asc') {
+          <span aria-hidden="true">↑</span>
+        }
+      }
+    </button>
+
+    <button
+      type="button"
+      class="btn btn--secondary"
+      [disabled]="!store.hasActiveFilters()"
+      (click)="store.clearFilters()"
+    >
+      Clear filters
+    </button>
+  </form>
+
+  @if (store.loading()) {
+    <app-loading-state label="Loading stores…" />
+  } @else if (store.error()) {
+    <app-error-state [message]="store.error()!" (retry)="store.loadStores(store.query)" />
+  } @else {
+    @let page = store.page();
+    @if (page.content.length === 0) {
+      <p class="empty-state">No stores match these filters.</p>
+    } @else {
+      <table class="table">
+        <caption class="visually-hidden">Store list, {{ page.totalElements }} total</caption>
+        <thead>
+          <tr>
+            <th scope="col">Store</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Status</th>
+            <th scope="col">Pumps offline</th>
+            <th scope="col">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of page.content; track item.storeId) {
+            <tr
+              tabindex="0"
+              role="link"
+              [attr.aria-label]="'View store ' + item.storeId"
+              (click)="openStore(item.storeId)"
+              (keydown.enter)="openStore(item.storeId)"
+            >
+              <td><a [routerLink]="['/stores', item.storeId]" (click)="$event.stopPropagation()">{{ item.storeId }}</a></td>
+              <td>{{ item.brand }}</td>
+              <td><app-status-badge [label]="item.status" /></td>
+              <td>{{ item.offlinePumps }} / {{ item.totalPumps }}</td>
+              <td>{{ item.storeAddress?.city }}, {{ item.storeAddress?.state }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <nav class="pagination" aria-label="Store list pages">
+        <button type="button" class="btn btn--secondary" [disabled]="page.page === 0" (click)="store.previousPage()">
+          Previous
+        </button>
+        <span aria-live="polite">Page {{ page.page + 1 }} of {{ page.totalPages || 1 }}</span>
+        <button type="button" class="btn btn--secondary" [disabled]="!page.hasNext" (click)="store.nextPage()">
+          Next
+        </button>
+      </nav>
+    }
+  }
+</section>

@@ -1,0 +1,31 @@
+# Local, single-host composition of both services. Not a production topology —
+# see README.md "Productionizing on AWS" for how this maps onto ECS/Fargate.
+services:
+  backend:
+    build:
+      context: ./backend
+    image: dex-insights-backend:local
+    ports:
+      - "8080:8080"
+    environment:
+      DEX_CORS_ALLOWED_ORIGINS: ${DEX_CORS_ALLOWED_ORIGINS:-http://localhost:4200}
+      DEX_CHAT_LLM_ENABLED: ${DEX_CHAT_LLM_ENABLED:-false}
+      DEX_CHAT_LLM_BASE_URL: ${DEX_CHAT_LLM_BASE_URL:-https://api.openai.com/v1}
+      DEX_CHAT_LLM_API_KEY: ${DEX_CHAT_LLM_API_KEY:-}
+      DEX_CHAT_LLM_MODEL: ${DEX_CHAT_LLM_MODEL:-gpt-4o-mini}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  ui:
+    build:
+      context: ./ui
+    image: dex-insights-ui:local
+    ports:
+      - "4200:8080"
+    depends_on:
+      backend:
+        condition: service_healthy

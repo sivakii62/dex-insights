@@ -1,0 +1,72 @@
+<h1>Ask about the fleet</h1>
+<p class="intro">
+  Answers are grounded in the store, transaction and incident data below — every claim cites the
+  record it came from.
+</p>
+
+<section class="card">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="field">
+      <label for="question">Question</label>
+      <textarea
+        id="question"
+        class="input"
+        rows="3"
+        formControlName="question"
+        placeholder="e.g. Which stores have the highest offline pumps?"
+      ></textarea>
+      @if (form.controls.question.invalid && form.controls.question.touched) {
+        <p class="field-error" role="alert">A question is required (max 500 characters).</p>
+      }
+    </div>
+
+    <div class="field field--inline">
+      <label for="store-id">Store id (optional)</label>
+      <input id="store-id" class="input" type="text" formControlName="storeId" placeholder="e.g. 10001" />
+    </div>
+
+    <button type="submit" class="btn btn--primary" [disabled]="store.loading()">
+      {{ store.loading() ? 'Thinking…' : 'Ask' }}
+    </button>
+  </form>
+
+  <div class="examples">
+    <span class="examples__label">Try:</span>
+    @for (example of exampleQuestions; track example) {
+      <button type="button" class="chip" (click)="askExample(example)">{{ example }}</button>
+    }
+  </div>
+</section>
+
+@if (store.loading()) {
+  <app-loading-state label="Retrieving context and composing an answer…" />
+} @else if (store.error()) {
+  <app-error-state [message]="store.error()!" [retryable]="false" />
+} @else if (store.response(); as result) {
+  <section class="card answer" aria-live="polite">
+    <h2>Answer</h2>
+    <p class="answer__text">{{ result.answer }}</p>
+    <p class="answer__summary">{{ result.retrievedContextSummary }}</p>
+
+    @if (result.citations.length > 0) {
+      <h3>Citations</h3>
+      <ul class="citation-list">
+        @for (citation of result.citations; track citation.recordId) {
+          <li class="citation">
+            <span class="citation__type">{{ citation.type }}</span>
+            <div class="citation__body">
+              <span class="citation__id">
+                {{ citation.recordId }}
+                @if (citation.storeId) {
+                  ·
+                  <a [routerLink]="['/stores', citation.storeId]">Store {{ citation.storeId }}</a>
+                }
+              </span>
+              <span class="citation__snippet">{{ citation.snippet }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+}
