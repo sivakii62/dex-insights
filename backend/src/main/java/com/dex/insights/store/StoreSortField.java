@@ -8,7 +8,7 @@ import java.util.Comparator;
 public enum StoreSortField {
 
     STORE_ID(Comparator.comparing(Store::storeId)),
-    OFFLINE_PUMPS(Comparator.comparingInt(Store::offlinePumps)),
+    OFFLINE_PUMPS(Comparator.comparingDouble(Store::offlinePumpRatio)),
     ANOMALY_COUNT(Comparator.comparingInt(Store::anomalyCount)),
     LAST_UPDATED(Comparator.comparing(Store::lastUpdatedTime, Comparator.nullsLast(Comparator.naturalOrder())));
 
