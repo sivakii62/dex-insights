@@ -61,15 +61,26 @@ export class StoreListComponent {
     this.page.set(0);
   }
 
+  /**
+   * Three-state cycle: unsorted -> descending -> ascending -> unsorted. "Unsorted" falls back to
+   * the store id ordering rather than an undefined one, so the list is always predictable.
+   */
   protected toggleOfflinePumpsSort(): void {
-    if (this.sortBy() === 'OFFLINE_PUMPS') {
-      this.direction.set(this.direction() === 'DESC' ? 'ASC' : 'DESC');
-    } else {
+    if (this.sortBy() !== 'OFFLINE_PUMPS') {
       this.sortBy.set('OFFLINE_PUMPS');
       this.direction.set('DESC');
+    } else if (this.direction() === 'DESC') {
+      this.direction.set('ASC');
+    } else {
+      this.sortBy.set('STORE_ID');
+      this.direction.set('ASC');
     }
     this.page.set(0);
   }
+
+  protected readonly offlinePumpsSortState = computed<'none' | 'asc' | 'desc'>(() =>
+    this.sortBy() !== 'OFFLINE_PUMPS' ? 'none' : this.direction() === 'DESC' ? 'desc' : 'asc',
+  );
 
   protected openStore(storeId: string): void {
     void this.router.navigate(['/stores', storeId]);

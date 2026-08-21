@@ -26,10 +26,28 @@
       </select>
     </div>
 
-    <button type="button" class="btn btn--secondary" (click)="toggleOfflinePumpsSort()">
+    <button
+      type="button"
+      class="btn btn--secondary"
+      [attr.aria-pressed]="offlinePumpsSortState() !== 'none'"
+      [attr.aria-label]="
+        'Sort by offline pumps: ' +
+        (offlinePumpsSortState() === 'desc'
+          ? 'highest first'
+          : offlinePumpsSortState() === 'asc'
+            ? 'lowest first'
+            : 'unsorted')
+      "
+      (click)="toggleOfflinePumpsSort()"
+    >
       Sort by offline pumps
-      @if (sortBy() === 'OFFLINE_PUMPS') {
-        <span aria-hidden="true">{{ direction() === 'DESC' ? '↓' : '↑' }}</span>
+      @switch (offlinePumpsSortState()) {
+        @case ('desc') {
+          <span aria-hidden="true">↓</span>
+        }
+        @case ('asc') {
+          <span aria-hidden="true">↑</span>
+        }
       }
     </button>
   </form>
