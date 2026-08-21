@@ -12,7 +12,7 @@
 
 	<groupId>com.dex</groupId>
 	<artifactId>insights</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2</version>
 	<name>dex-insights</name>
 	<description>Store operations insights API with grounded, citation-backed Q&amp;A</description>
 

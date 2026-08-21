@@ -39,6 +39,15 @@ public record Store(
         return totalPumps <= 0 ? 0d : (double) activePumps / totalPumps;
     }
 
+    /**
+     * Share of pumps currently offline, in the range 0..1. A store with 12 of 12 pumps down is a
+     * worse outage than one with 3 of 14 down even though the latter has a higher raw count, so
+     * this — not {@link #offlinePumps()} — is what "sort by offline pumps" ranks on.
+     */
+    public double offlinePumpRatio() {
+        return totalPumps <= 0 ? 0d : (double) offlinePumps / totalPumps;
+    }
+
     /** The lowest tank fill ratio at this store, or empty when no gauge readings exist. */
     public Optional<Tank> lowestTank() {
         return tanks.stream().min(Comparator.comparingDouble(Tank::fillRatio));
